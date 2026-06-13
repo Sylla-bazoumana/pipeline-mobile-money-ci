@@ -36,6 +36,8 @@ Sylla Bazoumana — Promotion 2024-2025
 - [x] faits_transactions chargée (99 800 lignes)
 - [x] 5 requêtes SQL analytiques (dont CTE + RANK)
 - [x] Tableau de bord Matplotlib (5 graphiques, dpi=150)
+- [x] DAG Airflow (4 tâches, logging, format Parquet)
+- [x] Dockerfile + docker-compose.yml (3 services)
 
 ## 📊 Résultats clés
 - **Volume total traité** : ~18 milliards FCFA sur 6 mois
