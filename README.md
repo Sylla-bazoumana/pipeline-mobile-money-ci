@@ -34,3 +34,10 @@ Sylla Bazoumana — Promotion 2024-2025
 - [x] Chargement Supabase réussi
 - [x] Schéma en étoile créé (4 dimensions + 1 table de faits)
 - [x] faits_transactions chargée (99 800 lignes)
+- [x] 5 requêtes SQL analytiques (dont CTE + RANK)
+
+## 📊 Résultats clés
+- **Volume total traité** : ~18 milliards FCFA sur 6 mois
+- **Opérateur leader** : Wave (25.20% de parts de marché)
+- **Zone la plus active** : Korhogo (10.35% du volume)
+- **Meilleur taux de succès** : Wave (90.30%)
