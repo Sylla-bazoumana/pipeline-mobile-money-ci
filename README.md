@@ -12,15 +12,17 @@ Analyse de 100 000 transactions sur 4 opérateurs (MTN, Orange, Moov, Wave).
 ![Docker](https://img.shields.io/badge/Docker-blue)
 
 ## 📁 Structure du projet
-````(retirer les parenthèses)
 pipeline-mobile-money-ci/
-├── notebook/
 ├── dags/
-├── dbt/
-├── requirements.txt
-├── Dockerfile
-└── docker-compose.yml
-```(retirer les parenthèses)
+│   └── pipeline_mobile_money.py    ← DAG Airflow (4 tâches)
+├── sql/
+│   └── requetes_analytiques.sql    ← 5 requêtes SQL analytiques
+├── Dockerfile                      ← Conteneurisation Python
+├──  README.md                       ← Documentation du projet
+├── dashboard_mobile_money.png      ← Tableau de bord (5 graphiques)
+├── docker-compose.yml              ← 3 services (Airflow, PostgreSQL, Notebook)
+└──  requirements.txt                ← Dépendances versionnées
+
 
 ## 👤 Auteur
 Sylla Bazoumana — Promotion 2024-2025
