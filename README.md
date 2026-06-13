@@ -25,3 +25,10 @@ pipeline-mobile-money-ci/
 ## 👤 Auteur
 Sylla Bazoumana — Promotion 2024-2025
 ```
+## ✅ Avancement
+- [x] Environnement setup (GitHub, Supabase, Colab)
+- [x] Dataset chargé et audité (100 000 lignes)
+- [x] Nettoyage complet (99 800 lignes propres)
+- [x] Enrichissement (20 colonnes)
+- [x] Tests qualité (5/5 passés)
+- [x] Chargement Supabase réussi
