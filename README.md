@@ -35,6 +35,7 @@ Sylla Bazoumana — Promotion 2024-2025
 - [x] Schéma en étoile créé (4 dimensions + 1 table de faits)
 - [x] faits_transactions chargée (99 800 lignes)
 - [x] 5 requêtes SQL analytiques (dont CTE + RANK)
+- [x] Tableau de bord Matplotlib (5 graphiques, dpi=150)
 
 ## 📊 Résultats clés
 - **Volume total traité** : ~18 milliards FCFA sur 6 mois
