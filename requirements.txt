@@ -1,0 +1,27 @@
+# ============================================================
+# requirements.txt — Pipeline Mobile Money CI
+# Sylla Bazoumana — Promotion 2024-2025
+# ============================================================
+
+# Manipulation de données
+pandas==2.0.3
+numpy==1.25.2
+pyarrow==13.0.0
+
+# Base de données
+sqlalchemy==2.0.20
+psycopg2-binary==2.9.7
+
+# Visualisation
+matplotlib==3.7.2
+seaborn==0.12.2
+
+# Orchestration
+apache-airflow==2.9.0
+
+# Qualité des données
+pytest==7.4.0
+
+# Notebook
+jupyter==1.0.0
+ipykernel==6.25.0
