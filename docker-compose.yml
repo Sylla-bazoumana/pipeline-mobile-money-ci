@@ -1,0 +1,81 @@
+# ============================================================
+# docker-compose.yml — Pipeline Mobile Money CI
+# Lancer avec  : docker-compose up -d
+# Arrêter avec : docker-compose down
+# ============================================================
+
+version: '3.8'   # Version du format docker-compose
+
+services:   # Liste des conteneurs à lancer
+
+  # ── SERVICE 1 : Base de données metadata Airflow ──────
+  # PostgreSQL stocke les métadonnées d'Airflow (DAGs, logs, statuts)
+  postgres:
+    image: postgres:15-alpine
+    # alpine = version ultra-légère de PostgreSQL (~60 Mo)
+    container_name: airflow_postgres
+    environment:
+      POSTGRES_USER: airflow          # Utilisateur de la base Airflow
+      POSTGRES_PASSWORD: airflow_secret  # Mot de passe
+      POSTGRES_DB: airflow_db         # Nom de la base
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Volume nommé = les données persistent au redémarrage
+    healthcheck:   # Vérifier que PostgreSQL est bien démarré
+      test: ['CMD', 'pg_isready', '-U', 'airflow']
+      interval: 5s    # Vérifier toutes les 5 secondes
+      retries: 5      # 5 tentatives avant de déclarer le service mort
+
+  # ── SERVICE 2 : Interface web Airflow ─────────────────
+  # Accessible sur http://localhost:8080
+  airflow-webserver:
+    build: .   # Construire depuis le Dockerfile du dossier courant
+    container_name: airflow_webserver
+    depends_on:
+      postgres:
+        condition: service_healthy
+        # Attendre que PostgreSQL réponde avant de démarrer
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      # Mode mono-machine — pas besoin de Celery ou Kubernetes
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql://airflow:airflow_secret@postgres/airflow_db
+      # Connexion d'Airflow à sa base de métadonnées
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      # Ne pas charger les DAGs d'exemple Airflow
+      SUPABASE_URL: ${SUPABASE_URL}
+      # Lire depuis le fichier .env local
+    ports:
+      - '8080:8080'
+      # machine:conteneur — accessible sur http://localhost:8080
+    volumes:
+      - ./dags:/opt/airflow/dags
+      # Synchroniser les DAGs locaux vers le conteneur en temps réel
+      - ./data:/data
+      # Partager le dossier data entre local et conteneur
+      - ./logs:/opt/airflow/logs
+      # Les logs Airflow sont accessibles en local
+    command: webserver   # Lancer le serveur web Airflow
+
+  # ── SERVICE 3 : Scheduler Airflow ─────────────────────
+  # Le scheduler surveille les DAGs et déclenche les tâches
+  # Il est séparé du webserver pour une architecture correcte
+  airflow-scheduler:
+    build: .
+    container_name: airflow_scheduler
+    depends_on:
+      postgres:
+        condition: service_healthy
+        # Le scheduler a aussi besoin de PostgreSQL
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql://airflow:airflow_secret@postgres/airflow_db
+      SUPABASE_URL: ${SUPABASE_URL}
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/data
+    command: scheduler   # Lancer le planificateur Airflow
+
+# ── VOLUMES PERSISTANTS ───────────────────────────────────
+# Les données survivent même si le conteneur est arrêté ou supprimé
+volumes:
+  postgres_data:   # Volume persistant pour les métadonnées Airflow
