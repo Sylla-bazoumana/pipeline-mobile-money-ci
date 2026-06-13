@@ -32,3 +32,5 @@ Sylla Bazoumana — Promotion 2024-2025
 - [x] Enrichissement (20 colonnes)
 - [x] Tests qualité (5/5 passés)
 - [x] Chargement Supabase réussi
+- [x] Schéma en étoile créé (4 dimensions + 1 table de faits)
+- [x] faits_transactions chargée (99 800 lignes)
